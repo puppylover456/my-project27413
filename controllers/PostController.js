@@ -6,7 +6,7 @@ export const getAll = async (req,res) => {
 
         res.json(posts);
     } catch (error) {
-        console.log(err);
+        console.log(error);
         res.status(500).json({
             message: 'Не удалось создать статью',
         });

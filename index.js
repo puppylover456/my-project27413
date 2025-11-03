@@ -1,5 +1,6 @@
 import express from 'express'
 import multer from 'multer'
+import cors from 'cors'
 import jwt from 'jsonwebtoken'
 import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
@@ -38,6 +39,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage })
 
 app.use(express.json());
+app.use(cors())
 app.use('/uploads', express.static('uploads'))
 
 app.get('/',(req,res) => {
@@ -189,6 +191,7 @@ app.post('/posts', checkAuth,postCreateValidation,handleValidationErrors,PostCon
 app.delete('/posts/:id', checkAuth ,PostController.remove)
 app.patch('/posts/:id', checkAuth,postCreateValidation,handleValidationErrors, PostController.update)
 
+
 app.listen(4444, (err) => {
 
     if  (err) {
@@ -197,4 +200,3 @@ app.listen(4444, (err) => {
 
     console.log('Server OK');
 });
-
