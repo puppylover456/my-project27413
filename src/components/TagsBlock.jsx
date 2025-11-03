@@ -15,6 +15,7 @@ export const TagsBlock = ({ items, isLoading = true }) => {
     <SideBlock title="Тэги">
       <List>
         {(isLoading ? [...Array(5)] : items).map((name, i) => (
+          
           <a
             style={{ textDecoration: "none", color: "black" }}
             href={`/tags/${name}`}

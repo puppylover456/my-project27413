@@ -5,6 +5,7 @@ import React from 'react';
 import styles from './Header.module.scss';
 import Container from '@mui/material/Container';
 import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 
 
@@ -25,7 +26,7 @@ export const Header = () => {
           <div className={styles.buttons}>
             {isAuth ? (
               <>
-                <Link href="/posts/create">
+                <Link to="/posts/create">
                   <Button variant="contained">Написать статью</Button>
                 </Link>
                 <Button onClick={onClickLogout} variant="contained" color="error">
