@@ -11,6 +11,15 @@ import { ThemeProvider } from "@mui/material";
 import { theme } from "./theme";
 import store from "./redux/store"
 
+import { useSelector } from 'react-redux';
+
+const MyComponent = () => {
+  const authData = useSelector((state) => state.auth);
+
+  console.log('Auth state:', authData);
+  // здесь вы должны увидеть объект или состояние auth
+};
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(

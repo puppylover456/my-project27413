@@ -8,17 +8,22 @@ import axios from '../axios';
 import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
-import { fetchPosts } from '../redux/slices/posts';
+import { fetchPosts, fetchTags } from '../redux/slices/posts';
+import { fetchUserData } from '../redux/slices/auth';
 
 export const Home = () => {
   const dispatch = useDispatch()
   
   
   const {posts ,tags } = useSelector(state => state.posts)
-  const isPostsLoading = posts.status === 'loading';
+  const isPostsLoading = posts.status === 'loading'; //загрузка постов
+  const isTagsLoading = tags.status === 'loading'; //загрузка тэгов
+
 
   React.useEffect (() => {
     dispatch(fetchPosts())
+    dispatch(fetchTags())
+    
     /* Загружаем данные с API 
     axios.get('/posts' ,{ headers: { 'Cache-Control': 'no-cache' } })
       .then((response) => {
@@ -50,28 +55,30 @@ console.log(posts)
       </Tabs>
       <Grid container spacing={4}>
         <Grid xs={8} item>
-          {(isPostsLoading ? [ ...Array(5)] : posts.items).map((obj,index) => (
+          {(isPostsLoading ? [ ...Array(5)] : posts?.items).map((obj,index) => (
+            isPostsLoading ? (
+            
+            <Post key = {index} isLoading={true} />
+            ) : (
             <Post
-              
-              id={1}
-              title="Название статьи"
-              imageUrl="https://ru.pinterest.com/pin/1015350678515140949/"
-              user={{
-                avatarUrl:
-                 'https://ru.pinterest.com/pin/1070097561489803246/',
-                fullName: "Я",
-              }}
-              createdAt={"12 июня 2022"}
-              viewsCount={150}
+              id={obj._id}
+              title={obj.title}
+              imageUrl={obj.imageUrl}
+              user={obj.user}
+              createdAt={obj.createdAt}
+              viewsCount={obj.viewsCount}
               commentsCount={3}
-              tags={['ract','gggg','ggggg']}
-              isLoading={true}
+              tags={obj.tags}
+              
               isEditable
             />
+    
+      )
+
           ))}
         </Grid>
         <Grid xs={4} item>
-          <TagsBlock items={['react', 'typescript', 'заметки']} isLoading={false} />
+          <TagsBlock items={tags.items} isLoading={isTagsLoading} />
           <CommentsBlock
             items={[
               {
