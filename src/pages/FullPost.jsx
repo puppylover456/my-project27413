@@ -1,55 +1,83 @@
-import React from "react"
-import {useParams } from "react-router-dom"
-import axios from 'axios';
+/**
+ * Страница полного отображения поста (статьи)
+ * 
+ * Отображает полный текст статьи с возможностью просмотра комментариев.
+ * Загружает данные поста по ID из URL параметров.
+ * 
+ * Особенности:
+ * - Использует ReactMarkdown для отображения Markdown текста
+ * - Показывает skeleton загрузки во время получения данных
+ * - Отображает блок комментариев с формой добавления нового комментария
+ * 
+ * Проблема: использует обычный axios вместо настроенного экземпляра из axios.js
+ */
+import React from "react";
+import { useParams } from "react-router-dom"; // Для получения параметров из URL
+import axios from 'axios'; // TODO: заменить на настроенный экземпляр из '../axios'
 
 import { Post } from "../components/Post";
 import { Index } from "../components/AddComment";
 import { CommentsBlock } from "../components/CommentsBlock";
+import ReactMarkdown from 'react-markdown'; // Библиотека для рендеринга Markdown
 
 export const FullPost = () => {
-  const [data,setData] = React.useState()
-  const [isLoading,setLoading] = React.useState(true)
+  // Состояние для хранения данных поста
+  const [data, setData] = React.useState();
+  // Состояние загрузки данных
+  const [isLoading, setLoading] = React.useState(true);
 
+  // Получаем ID поста из URL параметров (например, /posts/123 -> id = "123")
   const { id } = useParams();
 
-  console.log(id)
-
+  /**
+   * Эффект для загрузки данных поста при монтировании компонента
+   * 
+   * Загружает полную информацию о посте с сервера по его ID.
+   * После успешной загрузки обновляет состояние и скрывает индикатор загрузки.
+   */
   React.useEffect(() => {
-    axios.get(`http://localhost:4444/posts/${id}`).then(res => { //может быть исправить
-      setData(res.data)
-      setLoading(false) //Если запрос выполнился успешно
-    }).catch(err => {
-      console.warn(err)
-      alert("Ошибка при получении статьи")
-    })
+    // TODO: заменить на axios из '../axios' для использования базового URL и авторизации
+    axios.get(`http://localhost:4444/posts/${id}`)
+      .then(res => {
+        setData(res.data); // Сохраняем данные поста
+        setLoading(false); // Скрываем индикатор загрузки
+      })
+      .catch(err => {
+        console.warn(err);
+        alert("Ошибка при получении статьи");
+        setLoading(false); // Скрываем индикатор загрузки даже при ошибке
+      });
+  }, [id]); // Зависимость от id - эффект выполнится при изменении ID
 
-  }, []) 
-
+  // Если идет загрузка, показываем skeleton вместо поста
   if (isLoading) {
-    return <Post isLoading={isLoading} isFullPost /> //если идёт загрузка
+    return <Post isLoading={isLoading} isFullPost />;
   }
 
-
- ; //в консоли параметры
   return (
     <>
-      <Post //загрузка завершилась
-              id={data._id}
-              title={data.title}
-              imageUrl={data.imageUrl}
-              //imageUrl="https://ru.pinterest.com/pin/1015350678515140949/"
-              user={data.user}
-              createdAt={data.createdAt}
-              viewsCount={data.viewsCount}
-              commentsCount={3}
-              tags={data.tags}
-        isFullPost
+      {/* Компонент поста в полном режиме отображения */}
+      <Post
+        id={data._id}
+        title={data.title}
+        imageUrl={`http://localhost:4444${data.imageUrl}`}
+        user={data.user}
+        createdAt={data.createdAt}
+        viewsCount={data.viewsCount}
+        commentsCount={3} // TODO: заменить на реальное количество комментариев из data
+        tags={data.tags}
+        isFullPost // Флаг полного режима отображения
       >
+        {/* Содержимое поста - текст статьи в формате Markdown */}
         <p>
-          {data.text}
+          {/* ReactMarkdown преобразует Markdown текст в HTML */}
+          <ReactMarkdown children={data.text} />
         </p>
       </Post>
+      
+      {/* Блок комментариев */}
       <CommentsBlock
+        // TODO: заменить на реальные комментарии из data.comments
         items={[
           {
             user: {
@@ -68,6 +96,7 @@ export const FullPost = () => {
         ]}
         isLoading={false}
       >
+        {/* Форма для добавления нового комментария */}
         <Index />
       </CommentsBlock>
     </>
