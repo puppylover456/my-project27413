@@ -1,72 +1,49 @@
-# Getting Started with Create React App
+ Установка и запуск 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+ 1. Открыть терминал и перейти в папку проекта:
+`bash
+cd mern-blog-frontend
+```
+2. Установить зависимости:
+```bash
+npm install
+```
+3. Убедиться, что бэкенд запущен по адресу `http://localhost:4444`.
+4. Запустить клиентскую часть в режиме разработки:
 
-## Available Scripts
+ ```bash
+npm start
+```
 
-In the project directory, you can run:
+После запуска интерфейс будет доступен по адресу `http://localhost:3000`.
 
-### `npm start`
+Скрипты
+- **`npm start`** – запуск проекта в режиме разработки.
+- **`npm run build`** – сборка оптимизированной версии приложения в папку `build`.
+- **`npm test`** – запуск тестов (стандартная настройка Create React App).
+- **`npm run eject`** – вывод конфигурации сборки наружу.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Основные папки и файлы
+- - **`src/index.js`** – точка входа, подключение темы, роутера и Redux.
+- **`src/App.js`** – описание маршрутов и общая разметка страниц.
+- **`src/axios.js`** – настройка HTTP‑клиента с базовым URL `http://localhost:4444` и автоматическим добавлением токена.
+- **`src/redux/store.js`** – конфигурация хранилища Redux.
+- **`src/redux/slices/auth.js`** – логика авторизации, работа с токеном и состоянием пользователя.
+- **`src/redux/slices/posts.js`** – загрузка, удаление и хранение постов и тегов.
+- **`src/pages/`** – компоненты‑страницы:
+  - `Home.jsx` – список постов, теги и комментарии.
+  - `FullPost.jsx` – просмотр одного поста.
+  - `AddPost/` – создание и редактирование поста (Markdown‑редактор).
+  - `Login/`, `Registration/` – формы входа и регистрации.
+- **`src/components/`** – переиспользуемые элементы интерфейса (пост, шапка, блок тегов, блок комментариев, информация о пользователе и т.д.).
+- **`src/theme.js`** – настройка цветовой темы и типографики.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-//0
+- Используемые технологии
+- - React
+- Redux Toolkit и React Redux
+- React Router
+- Material UI
+- Axios
+- react-hook-form
+- react-markdown и react-simplemde-editor (Markdown‑редактор)
+- Sass и CSS‑модули
