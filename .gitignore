@@ -21,4 +21,13 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-//999
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+Thumbs.db
